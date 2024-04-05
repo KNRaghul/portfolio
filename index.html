@@ -3,36 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ryomen Sukuna</title>
+<title>Three.js and GSAP Example</title>
 <style>
     body {
-        font-family: Arial, sans-serif;
         margin: 0;
-        padding: 0;
-        background-color: #f0f0f0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
+        overflow: hidden;
     }
-    .container {
-        text-align: center;
-    }
-    h1 {
-        font-size: 4em;
-        color: #333;
-        margin-bottom: 20px;
-    }
-    .subtext {
-        font-size: 1.5em;
-        color: #666;
+    canvas {
+        display: block;
     }
 </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Ryomen Sukuna</h1>
-        <p class="subtext">The King of Curses<br>Golden Era</p>
-    </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.0/gsap.min.js"></script>
+<script>
+    // Initialize Three.js scene
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Create a cube
+    const geometry = new THREE.BoxGeometry();
+    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    const cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
+
+    // Set camera position
+    camera.position.z = 5;
+
+    // Animate the cube with GSAP
+    gsap.to(cube.rotation, { duration: 2, y: Math.PI * 2, repeat: -1, ease: "none" });
+
+    // Render loop
+    function animate() {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+    }
+    animate();
+</script>
 </body>
 </html>
