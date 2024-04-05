@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Three.js and GSAP Example</title>
+<title>Flying Sparrow</title>
 <style>
     body {
         margin: 0;
@@ -25,17 +25,26 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    // Create a cube
-    const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+    // Create a sparrow
+    const sparrowGeometry = new THREE.BoxGeometry(1, 1, 1);
+    const sparrowMaterial = new THREE.MeshBasicMaterial({ color: 0x996633 });
+    const sparrow = new THREE.Mesh(sparrowGeometry, sparrowMaterial);
+    scene.add(sparrow);
 
     // Set camera position
     camera.position.z = 5;
 
-    // Animate the cube with GSAP
-    gsap.to(cube.rotation, { duration: 2, y: Math.PI * 2, repeat: -1, ease: "none" });
+    // Scroll animation
+    function scrollAnimation() {
+        gsap.to(sparrow.position, {
+            duration: 2,
+            x: 5, // Move the sparrow to the right
+            ease: "power1.inOut"
+        });
+    }
+
+    // Add event listener for scroll
+    window.addEventListener("scroll", scrollAnimation);
 
     // Render loop
     function animate() {
